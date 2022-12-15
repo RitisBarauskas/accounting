@@ -26,9 +26,10 @@ class TeaserAuthorViewSet(
     """
     serializer_class = TeaserCreateUpdateSerializer
     permission_classes = [IsAuthor,]
+    http_method_names = ['get', 'post', 'patch']
 
     def get_queryset(self):
-        return Teaser.objects.filter(author=self.request.user)
+        return self.request.user.teasers.all()
 
     def perform_create(self, serializer):
         price = Price.objects.filter(
@@ -62,3 +63,4 @@ class TeaserAdminViewSet(
     serializer_class = TeaserSerializer
     permission_classes = [IsAdmin,]
     queryset = Teaser.objects.all()
+    http_method_names = ['get', 'post', 'patch']

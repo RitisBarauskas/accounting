@@ -10,9 +10,10 @@ v1_router.register(
     basename='teasers',
 )
 v1_router.register(
-    r'admin',
+    r'admin/teasers',
     TeaserAdminViewSet,
-    basename='admin',
+    basename='admin_teasers',
+
 )
 
 urlpatterns = [
