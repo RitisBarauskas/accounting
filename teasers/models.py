@@ -103,6 +103,9 @@ class Teaser(models.Model):
         related_name='teasers',
         verbose_name='Категория',
     )
+    description = models.TextField(
+        verbose_name='Описание',
+    )
     author = models.ForeignKey(
         User,
         on_delete=models.PROTECT,
@@ -116,7 +119,7 @@ class Teaser(models.Model):
     status = models.CharField(
         max_length=50,
         choices=TeaserStatusEnum.choices(),
-        default=TeaserStatusEnum.NEW,
+        default=TeaserStatusEnum.NEW.name,
         verbose_name='Статус',
     )
     price = models.ForeignKey(
