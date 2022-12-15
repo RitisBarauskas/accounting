@@ -137,8 +137,9 @@ class Teaser(models.Model):
         return f'{self.title} от {name}'
 
     def clean(self):
-        if self.status != TeaserStatusEnum.NEW:
+        if self.status != TeaserStatusEnum.NEW.name:
             raise ValidationError(
                 {'status': f'Нельзя менять тизеры, которые имеют отличный статус от "{TeaserStatusEnum.NEW.value}"'},
             )
+        super().clean()
 
