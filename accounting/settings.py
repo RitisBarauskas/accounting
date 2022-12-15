@@ -1,8 +1,13 @@
+import os
 from pathlib import Path
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-8dv$c2n6(a&+!_*xkg0p3x6*f&_$55z@d4y8^-3&+a@#t=&$jc'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = True
 
@@ -82,3 +87,5 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'users.UserAccounting'
