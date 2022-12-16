@@ -5,7 +5,7 @@ from teasers.models import Teaser
 from teasers.enums import TeaserStatusEnum
 
 
-class TeaserSerializer(ModelSerializer):
+class TeaserAdminSerializer(ModelSerializer):
     class Meta:
         model = Teaser
         fields = ('id', 'title', 'description', 'category', 'status', 'author', 'price')
@@ -20,7 +20,7 @@ class TeaserSerializer(ModelSerializer):
         return super().validate(attrs)
 
 
-class TeaserCreateUpdateSerializer(ModelSerializer):
+class TeaserListCreateUpdateSerializer(ModelSerializer):
     """
     Сериализатор создания тизеров.
     """

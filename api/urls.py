@@ -1,19 +1,13 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
-from api.views import TeaserAuthorViewSet, TeaserAdminViewSet
+from api.views import TeaserViewSet
 
 v1_router = DefaultRouter()
 v1_router.register(
     r'teasers',
-    TeaserAuthorViewSet,
+    TeaserViewSet,
     basename='teasers',
-)
-v1_router.register(
-    r'admin/teasers',
-    TeaserAdminViewSet,
-    basename='admin_teasers',
-
 )
 
 urlpatterns = [

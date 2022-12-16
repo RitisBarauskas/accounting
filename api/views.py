@@ -9,11 +9,11 @@ from rest_framework.status import HTTP_200_OK
 
 from teasers.enums import TeaserStatusEnum
 from teasers.models import Teaser, Price
-from api.serializers import TeaserSerializer, TeaserCreateUpdateSerializer, WalletSerializer
+from api.serializers import TeaserAdminSerializer, TeaserListCreateUpdateSerializer, WalletSerializer
 from api.permissions import IsAdmin, IsAuthor
 
 
-class TeaserAuthorViewSet(
+class TeaserViewSet(
     GenericViewSet,
     ListModelMixin,
     RetrieveModelMixin,
@@ -24,12 +24,27 @@ class TeaserAuthorViewSet(
     """
     Вьюсет тизеров.
     """
-    serializer_class = TeaserCreateUpdateSerializer
-    permission_classes = [IsAuthor,]
     http_method_names = ['get', 'post', 'patch']
 
     def get_queryset(self):
+        if self.request.user.is_admin:
+            return Teaser.objects.all()
+
         return self.request.user.teasers.all()
+
+    def get_permissions(self):
+        if self.request.user.is_admin:
+            permission_classes = (IsAdmin,)
+        else:
+            permission_classes = (IsAuthor,)
+
+        return [permission() for permission in permission_classes]
+
+    def get_serializer(self, *args, **kwargs):
+        if self.request.user.is_admin:
+            return TeaserAdminSerializer
+
+        return TeaserListCreateUpdateSerializer
 
     def perform_create(self, serializer):
         price = Price.objects.filter(
@@ -39,7 +54,7 @@ class TeaserAuthorViewSet(
 
         serializer.save(price=price, author=self.request.user)
 
-    @action(methods=['GET',], detail=False, permission_classes=(IsAuthor,))
+    @action(methods=('GET',), detail=False, permission_classes=(IsAuthor,))
     def wallet(self, request):
         amount = request.user.teasers.filter(
             status=TeaserStatusEnum.APPROVED.name
@@ -49,18 +64,3 @@ class TeaserAuthorViewSet(
         serializer = WalletSerializer(amount)
 
         return Response(serializer.data, status=HTTP_200_OK)
-
-
-class TeaserAdminViewSet(
-    ListModelMixin,
-    UpdateModelMixin,
-    RetrieveModelMixin,
-    GenericViewSet,
-):
-    """
-    Вьюсет тизеров.
-    """
-    serializer_class = TeaserSerializer
-    permission_classes = [IsAdmin,]
-    queryset = Teaser.objects.all()
-    http_method_names = ['get', 'post', 'patch']

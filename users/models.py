@@ -17,7 +17,7 @@ class UserAccounting(AbstractUser):
 
     @property
     def is_author(self):
-        return (self.role == UserRolesEnum.AUTHOR.name or self.is_authenticated) and not self.is_admin
+        return self.role == UserRolesEnum.AUTHOR.name
 
     @property
     def is_admin(self):
