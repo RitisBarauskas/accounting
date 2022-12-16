@@ -9,7 +9,7 @@ class TeaserAdminSerializer(ModelSerializer):
     class Meta:
         model = Teaser
         fields = ('id', 'title', 'description', 'category', 'status', 'author', 'price')
-        read_only_fields = ('id','price', 'author')
+        read_only_fields = ('id', 'price', 'title', 'description', 'category', 'author')
 
     def validate(self, attrs):
         if self.instance.status != TeaserStatusEnum.NEW.name:
