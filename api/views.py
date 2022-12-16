@@ -1,16 +1,19 @@
 import datetime
 
 from django.db.models import Q, Sum
-from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet
-from rest_framework.mixins import ListModelMixin, UpdateModelMixin, RetrieveModelMixin, CreateModelMixin
 from rest_framework.decorators import action
+from rest_framework.mixins import (CreateModelMixin, ListModelMixin,
+                                   RetrieveModelMixin, UpdateModelMixin)
+from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK
+from rest_framework.viewsets import GenericViewSet
 
-from teasers.enums import TeaserStatusEnum
-from teasers.models import Teaser, Price
-from api.serializers import TeaserAdminSerializer, TeaserListCreateUpdateSerializer, WalletSerializer
 from api.permissions import IsAdmin, IsAuthor
+from api.serializers import (TeaserAdminSerializer,
+                             TeaserListCreateUpdateSerializer,
+                             WalletSerializer)
+from teasers.enums import TeaserStatusEnum
+from teasers.models import Price, Teaser
 
 
 class TeaserViewSet(

@@ -1,8 +1,9 @@
 from rest_framework.exceptions import ValidationError
-from rest_framework.serializers import ModelSerializer, Serializer, IntegerField
+from rest_framework.serializers import (IntegerField, ModelSerializer,
+                                        Serializer)
 
-from teasers.models import Teaser
 from teasers.enums import TeaserStatusEnum
+from teasers.models import Teaser
 
 
 class TeaserAdminSerializer(ModelSerializer):

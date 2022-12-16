@@ -145,4 +145,3 @@ class Teaser(models.Model):
                 {'status': f'Нельзя менять тизеры, которые имеют отличный статус от "{TeaserStatusEnum.NEW.value}"'},
             )
         super().clean()
-
