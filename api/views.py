@@ -40,7 +40,7 @@ class TeaserViewSet(
 
         return [permission() for permission in permission_classes]
 
-    def get_serializer(self, *args, **kwargs):
+    def get_serializer_class(self):
         if self.request.user.is_admin:
             return TeaserAdminSerializer
 
